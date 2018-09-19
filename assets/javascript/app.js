@@ -20,7 +20,7 @@ var gemGame = {
             var imageCrystal = $("<img>");
             imageCrystal.addClass("crystal-image");
             //imageCrystal.attr("src", "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
-            imageCrystal.attr("src", "../images/gem0.jpg");
+           imageCrystal.attr("src", "assets/images/gem"+i+".png");
            imageCrystal.attr("width", "15%");
            imageCrystal.attr("height", "15%");
            
@@ -38,11 +38,13 @@ var gemGame = {
             
             if (gemGame.counter==gemGame.targetNum){
                 gemGame.endFlag = true;
-                gemGame.gameFinish();
+                gemGame.gameWin();
+               
             }
             else if (gemGame.counter>=gemGame.targetNum){
                 gemGame.endFlag = true;
-                gemGame.gameFinish();
+                gemGame.gameLose();
+                
             }
         
           });
@@ -60,16 +62,31 @@ var gemGame = {
         //return numArr;
     },
 
-    "gameFinish": function(){
-        if(gemGame.endFlag) {
+    "gameWin": function(){
+        
             alert("You win!");
-        }
-        else if (gemGame.targetNum<=gemGame.counter){
-            alert("You lose!");
-        }
-        // else if (gemGame.targetNum >= gemGame.counter) {
-        //     alert("You lose!!");
-        //   }
+            gemGame.scoreWin++;
+            $("#win").text(gemGame.scoreWin);
+    },
+
+    "gameLose": function(){
+        
+        alert("You lose!");
+        gemGame.scoreLose++;
+        $("#lose").text(gemGame.scoreLose);
+},
+
+    "restart": function(){
+    
+        this.counter = 0;
+        $("#counter").text(gemGame.counter);
+        this.gemNumArr = [];
+        this.endFlag = false;
+        gemGame.rndmNumGen();
+        gemGame.gemNumGen();
+        $("#crystals").empty();
+        gemGame.gemGen();
+
     },
 
 };
@@ -79,4 +96,11 @@ $(document).ready(function() {
     gemGame.rndmNumGen();
     gemGame.gemNumGen();
     gemGame.gemGen();
+    $("#win").text(gemGame.scoreWin);
+    $("#lose").text(gemGame.scoreLose);
+    $("#counter").text(gemGame.counter);
+    $(".restart").on("click", function(){
+        gemGame.restart();
+    });
+
 });

@@ -3,6 +3,13 @@ body {
     background-repeat: repeat;
 }
 
+
+
 .crystal-image{
     margin-right:3%;
+}
+
+.container{
+    margin-top: 5%;
+    margin-bottom: 15%;
 }
