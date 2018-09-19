@@ -4,7 +4,6 @@ var gemGame = {
     "counter":0,
     "targetNum": 0,
     "gemNumArr": [],
-    "endFlag": false,
 
     "rndmNumGen": function(){
         var number = Math.floor(Math.random() * 40) + 12;
@@ -19,8 +18,8 @@ var gemGame = {
 
             var imageCrystal = $("<img>");
             imageCrystal.addClass("crystal-image");
-            //imageCrystal.attr("src", "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
-            imageCrystal.attr("src", "../images/gem0.jpg");
+            imageCrystal.attr("src", "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
+            //imageCrystal.attr("src", "../../assets/images/gem0.jpg");
            imageCrystal.attr("width", "15%");
            imageCrystal.attr("height", "15%");
            
@@ -35,15 +34,9 @@ var gemGame = {
             crystalValue = parseInt(crystalValue);
             gemGame.counter += crystalValue;
             $("#counter").text(gemGame.counter);
-            
-            if (gemGame.counter==gemGame.targetNum){
-                gemGame.endFlag = true;
-                gemGame.gameFinish();
-            }
-            else if (gemGame.counter>=gemGame.targetNum){
-                gemGame.endFlag = true;
-                gemGame.gameFinish();
-            }
+
+            gemGame.gameLogic();
+       
         
           });
     },
@@ -60,11 +53,11 @@ var gemGame = {
         //return numArr;
     },
 
-    "gameFinish": function(){
-        if(gemGame.endFlag) {
+    "gameLogic": function(){
+        $.when( gemGame.targetNum==gemGame.counter ).done(function ( v1, v2 ) {
             alert("You win!");
-        }
-        else if (gemGame.targetNum<=gemGame.counter){
+        });
+        if (gemGame.targetNum<=gemGame.counter){
             alert("You lose!");
         }
         // else if (gemGame.targetNum >= gemGame.counter) {
